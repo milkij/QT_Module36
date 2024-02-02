@@ -13,6 +13,7 @@
 #include <iostream>
 #include <QPainter>
 #include <QPaintEvent>
+#include "QTimer"
 
 class ImageButton : public QPushButton {
 
@@ -25,6 +26,7 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
     void keyPressEvent(QKeyEvent *e) override;
+    bool getIsDown();
 
 public slots:
     void setUp();

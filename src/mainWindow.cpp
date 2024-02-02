@@ -14,7 +14,9 @@ ImageButton::ImageButton(QWidget *parent) {
     mButtonDownPixmap = QPixmap("../img//greenButton.png");
     mCurrentButtonPixmap = mButtonUpPixmap;
     setGeometry(mCurrentButtonPixmap.rect());
-    connect(this, &QPushButton::clicked, this, &ImageButton::setDown);
+    if(!isDown) connect(this, &QPushButton::clicked, this, &ImageButton::setDown);
+    else connect(this, &QPushButton::clicked, this, &ImageButton:: setUp);
+
 }
 
 void ImageButton::paintEvent(QPaintEvent *e) {
@@ -37,12 +39,19 @@ void ImageButton::keyPressEvent(QKeyEvent *e) {
 
 void ImageButton::setDown() {
     mCurrentButtonPixmap = mButtonDownPixmap;
+    isDown=true;
     update();
+    QTimer::singleShot(1000,this,&ImageButton::setUp);
 }
 
 void ImageButton::setUp() {
     mCurrentButtonPixmap = mButtonUpPixmap;
+    isDown=false;
     update();
+}
+
+ bool ImageButton::getIsDown()  {
+    return this->isDown;
 }
 
 
